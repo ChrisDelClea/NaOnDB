@@ -1,0 +1,16 @@
+[package]
+name = "naondb"
+version = "0.1.0"
+edition = "2024"
+description = "Ontology-native, multitemporal, embedded graph database on redb"
+repository = "https://github.com/ChrisDelClea/NaOnDB"
+keywords = ["rdf", "ontology", "graph", "redb", "temporal"]
+categories = ["database-implementations"]
+publish = false
+
+[dependencies]
+redb = "=4.4.0"
+oxrdf = { version = "0.3.4", features = ["rdf-12"] }
+
+[dev-dependencies]
+tempfile = "3"

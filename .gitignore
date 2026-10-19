@@ -1,0 +1,9 @@
+/target/
+*.redb
+*.redb.tmp
+.env
+.DS_Store
+.idea/
+.vscode/
+__pycache__/
+*.pyc

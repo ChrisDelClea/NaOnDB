@@ -1,0 +1,23 @@
+@prefix core: <urn:naondb:core:> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+core:Ontology a owl:Ontology ;
+    rdfs:label "NaOnDB Core Vocabulary" .
+
+core:Entity a owl:Class ; rdfs:label "Entity" .
+core:Event a owl:Class ; rdfs:label "Event" .
+core:Claim a owl:Class ; rdfs:label "Claim / assertion instance" .
+core:Evidence a owl:Class ; rdfs:label "Evidence" .
+core:Source a owl:Class ; rdfs:label "Information source" .
+core:TimeAxis a owl:Class ; rdfs:label "Domain time axis" .
+
+core:hasEvidence a owl:ObjectProperty ;
+    rdfs:domain core:Claim ; rdfs:range core:Evidence .
+core:fromSource a owl:ObjectProperty ;
+    rdfs:domain core:Claim ; rdfs:range core:Source .
+core:supports a owl:ObjectProperty ;
+    rdfs:domain core:Evidence ; rdfs:range core:Claim .
+core:contradicts a owl:ObjectProperty ;
+    rdfs:domain core:Claim ; rdfs:range core:Claim .

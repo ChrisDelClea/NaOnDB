@@ -1,0 +1,12 @@
+@prefix mem: <urn:naondb:memory:> .
+@prefix core: <urn:naondb:core:> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+# Example application constraint; SHACL evaluation is NOT implemented in the scaffold.
+mem:ObservationShape a sh:NodeShape ;
+    sh:targetClass mem:Observation ;
+    sh:property [
+        sh:path mem:basedOn ;
+        sh:class core:Evidence ;
+        sh:minCount 1
+    ] .

@@ -1,0 +1,25 @@
+@prefix mem: <urn:naondb:memory:> .
+@prefix core: <urn:naondb:core:> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+mem:Ontology a owl:Ontology ;
+    owl:imports core:Ontology ;
+    rdfs:label "Optional agent memory vocabulary" .
+
+mem:Experience a owl:Class ; rdfs:subClassOf core:Event .
+mem:Observation a owl:Class ; rdfs:subClassOf core:Claim .
+mem:Opinion a owl:Class ; rdfs:subClassOf core:Claim .
+mem:Hypothesis a owl:Class ; rdfs:subClassOf core:Claim .
+mem:Decision a owl:Class ; rdfs:subClassOf core:Event .
+mem:Outcome a owl:Class ; rdfs:subClassOf core:Event .
+mem:MemorySummary a owl:Class ; rdfs:subClassOf core:Entity .
+
+mem:observedIn a owl:ObjectProperty ;
+    rdfs:domain mem:Observation ; rdfs:range mem:Experience .
+mem:basedOn a owl:ObjectProperty ;
+    rdfs:domain core:Claim ; rdfs:range core:Evidence .
+mem:resultedIn a owl:ObjectProperty ;
+    rdfs:domain mem:Decision ; rdfs:range mem:Outcome .
+mem:derivedFrom a owl:ObjectProperty ;
+    rdfs:domain mem:MemorySummary ; rdfs:range core:Event .
