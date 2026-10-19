@@ -23,10 +23,30 @@ pub(crate) enum IndexOrder {
 impl EncodedQuad {
     pub(crate) fn key(self, order: IndexOrder) -> [u8; 32] {
         let values = match order {
-            IndexOrder::Gspo => [self.graph.0, self.subject.0, self.predicate.0, self.object.0],
-            IndexOrder::Gpos => [self.graph.0, self.predicate.0, self.object.0, self.subject.0],
-            IndexOrder::Gosp => [self.graph.0, self.object.0, self.subject.0, self.predicate.0],
-            IndexOrder::Spog => [self.subject.0, self.predicate.0, self.object.0, self.graph.0],
+            IndexOrder::Gspo => [
+                self.graph.0,
+                self.subject.0,
+                self.predicate.0,
+                self.object.0,
+            ],
+            IndexOrder::Gpos => [
+                self.graph.0,
+                self.predicate.0,
+                self.object.0,
+                self.subject.0,
+            ],
+            IndexOrder::Gosp => [
+                self.graph.0,
+                self.object.0,
+                self.subject.0,
+                self.predicate.0,
+            ],
+            IndexOrder::Spog => [
+                self.subject.0,
+                self.predicate.0,
+                self.object.0,
+                self.graph.0,
+            ],
         };
         let mut key = [0_u8; 32];
         for (index, value) in values.into_iter().enumerate() {

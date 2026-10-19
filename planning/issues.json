@@ -1,0 +1,259 @@
+[
+  {
+    "key": "01",
+    "title": "[P0] RDF 1.2 term dictionary and stable IDs",
+    "area": "storage",
+    "depends": [],
+    "goal": "Introduce a lossless, persistent, bidirectional dictionary for IRI, blank node, literal (language/direction/datatype) and RDF 1.2 triple terms. Remove public dependence on caller-supplied TermId.",
+    "criteria": [
+      "Identical RDF terms intern to the same stable ID across reopen; distinct RDF terms never alias.",
+      "All RDF 1.2 triple terms are stored as *object*-position terms; nesting and bounds are well-defined.",
+      "Round-trip preserves lexical form, language, base direction, datatype and blank-node scope.",
+      "Dictionary mutations and all affected graph indexes are in one redb transaction.",
+      "Public RDF insertion APIs never accept arbitrary unvalidated numeric IDs."
+    ]
+  },
+  {
+    "key": "02",
+    "title": "[P0] Atomic quad indexes and graph pattern scans",
+    "area": "storage",
+    "depends": [
+      "01"
+    ],
+    "goal": "Replace the raw-ID bootstrap with atomic GSPO, GPOS, GOSP and SPOG indexes, duplicate set semantics, and efficient graph pattern/range reads.",
+    "criteria": [
+      "Inserts/deletes/update projections modify all indexes atomically in redb.",
+      "Graph prefix scans, inbound/outbound neighbor seeks, and predicate filters return the same quad set.",
+      "Cross-named-graph and default-graph queries behave correctly.",
+      "A graph catalog preserves empty named graphs; deleting the last quad does not silently delete graph existence.",
+      "Reopen/recovery preserves index consistency; implement a verifier that cross-checks indexes.",
+      "Document key byte layout and big-endian sorting invariants."
+    ]
+  },
+  {
+    "key": "03",
+    "title": "[P0] Durable assertion ledger and knowledge-as-of commits",
+    "area": "temporal",
+    "depends": [
+      "01",
+      "02"
+    ],
+    "goal": "Give assertion occurrences stable IDs, sources, reifier references, stance and system-assigned commit versions. Preserve versions rather than overwrite knowledge history.",
+    "criteria": [
+      "A monotonic CommitId is assigned only by the database at a successful commit.",
+      "Assertion, retract and correction produce durable history and never erase a prior source claim.",
+      "Known-as-of(commit) reproduces exactly the prior accepted/claimed state.",
+      "Distinct observations reifying the same proposition retain separate identity and provenance.",
+      "Concurrent reads observe consistent MVCC snapshots across ledger and quad indexes.",
+      "Proposition identity is independent of graph context; multiple supporting claims do not produce duplicate quads or premature retraction when one source withdraws."
+    ]
+  },
+  {
+    "key": "04",
+    "title": "[P0] Native multitemporal axis registry and indexed queries",
+    "area": "temporal",
+    "depends": [
+      "03"
+    ],
+    "goal": "Implement a versioned TimeAxis registry and indexed instant/interval filters for independent valid/event/observed/published/custom axes; transaction-time is system-managed.",
+    "criteria": [
+      "Axis definitions have durable IDs, names and semantics; custom axes can be registered safely.",
+      "Use inclusive start/exclusive end UTC-microsecond intervals; define unbounded and instant semantics.",
+      "Queries combine known-as-of with different temporal axes without conflating them.",
+      "Late arriving events, retroactive validity corrections and out-of-order observation timestamps work.",
+      "Temporal axis metadata and index updates commit atomically with claim revisions.",
+      "Document missing-axis behavior, point-vs-interval matching, precision and supported UTC range; unknown and unbounded are not conflated."
+    ]
+  },
+  {
+    "key": "05",
+    "title": "[P0] Native RDF 1.2 reifiers, quoted propositions and assertion semantics",
+    "area": "rdf",
+    "depends": [
+      "01",
+      "03"
+    ],
+    "goal": "Represent RDF 1.2 triple terms and rdf:reifies natively while keeping RDF quad assertion separate from reification, provenance and truth status.",
+    "criteria": [
+      "Quoted triple terms do not accidentally assert the corresponding quad.",
+      "One proposition may have multiple distinct reifiers with different sources/times/confidence.",
+      "Assertions may be contradicted or proposed without changing RDF graph truth semantics.",
+      "Nested RDF 1.2 triple terms round-trip correctly; malformed nesting fails safely.",
+      "Explicit tests verify differences between RDF dataset membership and claim occurrences."
+    ]
+  },
+  {
+    "key": "06",
+    "title": "[P0] Ontology registry, identity policies and SHACL ingestion",
+    "area": "ontology",
+    "depends": [
+      "02",
+      "05"
+    ],
+    "goal": "Version RDF/RDFS/OWL ontologies in the database, define canonical entity identities, and enforce selected SHACL constraints for accepted data.",
+    "criteria": [
+      "Import/upgrade ontology versions with stable namespace and entity-identity policies.",
+      "SHACL violations return actionable node/path/value diagnostics and abort affected writes atomically.",
+      "OWL domain/range inference is never treated as an automatic closed-world validation rule.",
+      "Candidate LLM enrichments remain distinct from accepted facts until validated.",
+      "Ontology/schema upgrades have an explicit validation/migration policy."
+    ]
+  },
+  {
+    "key": "07",
+    "title": "[P1] Standards RDF I/O: Turtle, N-Quads and RDF 1.2",
+    "area": "rdf",
+    "depends": [
+      "02",
+      "05"
+    ],
+    "goal": "Expose standards-compliant graph/dataset import and export using OxRDF/OxRDFIO with explicit RDF 1.2 feature gates.",
+    "criteria": [
+      "Turtle round-trips one RDF graph; N-Quads/TriG preserve dataset membership. Preserve empty named graphs where the format supports them, and document lossy formats.",
+      "RDF 1.2 quoted propositions and reifier relationships are preserved where format supports them.",
+      "Blank nodes are consistently scoped within an import and fresh across independent imports; prefixes expand without being mistaken for identity.",
+      "Streaming imports batch commits without inconsistent partially indexed records.",
+      "Run W3C positive/negative fixture subsets as conformance tests."
+    ]
+  },
+  {
+    "key": "08",
+    "title": "[P1] SPARQL and typed graph traversal API over redb",
+    "area": "query",
+    "depends": [
+      "02",
+      "04",
+      "07"
+    ],
+    "goal": "Integrate SPARQL graph pattern evaluation over native redb snapshots and a narrow typed traversal API; do not reimplement a full query language.",
+    "criteria": [
+      "A graph pattern uses appropriate index prefixes rather than full scans when possible.",
+      "Named graph + RDF 1.2 term queries preserve their semantics.",
+      "Query execution takes an explicit snapshot and temporal filter context.",
+      "One- and multi-hop traversals work for both directions, with bounded fanout controls.",
+      "Explain output identifies chosen index paths and actual scanned entries."
+    ]
+  },
+  {
+    "key": "09",
+    "title": "[P1] Native redb-backed BM25 and lexical filters",
+    "area": "search",
+    "depends": [
+      "01",
+      "03"
+    ],
+    "goal": "Implement a compact inverted index, document length/statistics and BM25 search, with provenance/entity/time filters.",
+    "criteria": [
+      "Terms, postings and stats persist inside redb; index updates are transactionally consistent.",
+      "BM25 results are reproducible for a frozen corpus; tokenizer/language policy is explicit.",
+      "Deleted/withdrawn or invalid-as-of records are filtered from query-time results.",
+      "Result IDs resolve to original RDF/claim evidence and sources.",
+      "Historical queries define snapshot-consistent postings AND corpus statistics, or explicitly report an unsupported mode; no silent future-data leakage."
+    ]
+  },
+  {
+    "key": "10",
+    "title": "[P1] Native embeddings and vector similarity without external DB",
+    "area": "search",
+    "depends": [
+      "01",
+      "03"
+    ],
+    "goal": "Persist typed embeddings/model identities in redb; implement exact vector ranking first, then evaluate ANN and rebuildable acceleration.",
+    "criteria": [
+      "Embedding dimensionality, model ID, normalization and distance metric are validated.",
+      "Exact similarity returns correct top-k under model-specific isolation.",
+      "Embeddings remain durable in redb even if the ANN cache is deleted.",
+      "ANN design has reproducible recall/latency trade-off benchmarks before being accepted.",
+      "No Qdrant/Postgres/other service is needed for core vector search.",
+      "Filter visibility by the requested snapshot; ANN has an indexed commit watermark plus a delta/exact fallback when stale."
+    ]
+  },
+  {
+    "key": "11",
+    "title": "[P1] Unified graph + temporal + BM25 + vector retrieval",
+    "area": "search",
+    "depends": [
+      "04",
+      "08",
+      "09",
+      "10"
+    ],
+    "goal": "Build a single typed search query that blends lexical, semantic, graph expansion, ontology and temporal constraints, with explainable ranking.",
+    "criteria": [
+      "One query may combine exact graph restrictions, time axis constraints and BM25/vector candidates.",
+      "Ranking strategy and reciprocal rank fusion weights are explicit and testable.",
+      "Returned hits preserve evidence, source, reifier identity and time coordinates.",
+      "Fast mode uses zero LLM calls; optional deep/agent retrieval is a separate client.",
+      "Memory and non-memory domains use the same search API.",
+      "All retrieval branches share one logical snapshot and visibility policy; apply hard filters without silently losing all relevant top-k candidates."
+    ]
+  },
+  {
+    "key": "12",
+    "title": "[P1] Versioned memory ontology and experience-to-outcome example",
+    "area": "memory",
+    "depends": [
+      "05",
+      "06",
+      "08"
+    ],
+    "goal": "Make agent memory an *optional ontology package* using Experience, Observation, Opinion, Hypothesis, Decision, Outcome, Evidence and Summary.",
+    "criteria": [
+      "Import the memory TTL/shapes without introducing special memory tables in the core.",
+      "An agent records a decision, its observational evidence and a subsequent outcome.",
+      "Two agents can disagree on one proposition without overwriting either observation.",
+      "A reproducible as-of query reconstructs what the agent knew when it decided.",
+      "LightMem-inspired consolidation stores links back to original episodes/evidence."
+    ]
+  },
+  {
+    "key": "13",
+    "title": "[P2] Durable multimodal evidence references and native KV blobs",
+    "area": "storage",
+    "depends": [
+      "01",
+      "03"
+    ],
+    "goal": "Store bounded binary evidence payloads/content hashes or external immutable media references using redb, linked to RDF event cells (EM²Mem-inspired).",
+    "criteria": [
+      "Content-addressed assets are deduplicated; metadata and graph references commit atomically.",
+      "Large media can use explicit externally stored URIs with checksums, without making object storage required.",
+      "Text/audio/image/video event evidence points to timestamps and stable source IDs.",
+      "Retrieval can return raw evidence references without loading unnecessary media into RAM."
+    ]
+  },
+  {
+    "key": "14",
+    "title": "[P2] Python bindings and typed API example",
+    "area": "api",
+    "depends": [
+      "08",
+      "11"
+    ],
+    "goal": "Expose open, ontology import, assertions, temporal graph queries and hybrid search via PyO3, without replicating application logic in Python.",
+    "criteria": [
+      "A Python app creates/opens a NaOnDB file and queries canonical graph data.",
+      "Native Rust error types map to clear Python exceptions.",
+      "Python temporal axes and claim IDs round-trip without precision loss.",
+      "Example shows one enterprise graph and one optional agent-memory ontology."
+    ]
+  },
+  {
+    "key": "15",
+    "title": "[P0] Correctness and recovery gates for an embedded graph store",
+    "area": "quality",
+    "depends": [
+      "02",
+      "03"
+    ],
+    "goal": "Prove atomicity, durability and semantic invariants before performance optimization. Extend initial smoke tests to crash/restart and model-based cases.",
+    "criteria": [
+      "All physical indexes match the logical quad set after random transaction histories.",
+      "Forced failures during a write never leave half-updated quad/term/claim indexes.",
+      "Crash/reopen yields only whole committed snapshots; rollback and restoration work.",
+      "Temporal as-of queries and reified-unasserted propositions have regression fixtures.",
+      "Add repeatable read/scan and mixed workload benchmarks with p50/p95/p99."
+    ]
+  }
+]

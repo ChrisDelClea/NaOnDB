@@ -5,7 +5,7 @@ mod schema;
 
 use std::path::Path;
 
-use redb::{Database, Error, ReadableDatabase, ReadableTable, ReadableTableMetadata};
+use redb::{Database, Error, ReadableDatabase, ReadableTableMetadata};
 
 use crate::model::ids::{GraphId, TermId};
 use crate::model::quad::{EncodedQuad, IndexOrder};
