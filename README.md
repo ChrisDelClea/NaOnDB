@@ -6,6 +6,12 @@ An ontology-first, Rust-native embedded graph database built directly on **redb*
 A general-purpose knowledge graph for enterprise ontologies, observability, data integration,
 and agent memory. Agent memory is an optional ontology package, not a second database.
 
+> **Source-available; free for noncommercial use.** Personal projects, noncommercial
+> research and teaching, and community contributions are welcome. Commercial use
+> requires a separate written license; the current price is **EUR 20,000**.
+> See [LICENSE](LICENSE), [commercial licensing](COMMERCIAL-LICENSING.md), and
+> [how to contribute](CONTRIBUTING.md).
+
 > **Bootstrap / pre-alpha.** The implemented storage slice is an ID-encoded quad index.
 > Term interning, native RDF 1.2 persistence, ontology enforcement, temporal history/queries,
 > SPARQL, BM25 and vector search remain implementation work. Model types and design documents
@@ -66,7 +72,32 @@ Start with the term dictionary, then atomic quad operations and the assertion le
 LightMem-family consolidation and event/evidence ideas, Hindsight-style retrieval and
 Graphiti-style knowledge evolution are inspiration, not dependencies or promises of feature parity.
 
+## License and participation
+
+NaOnDB uses the project-specific **NaOnDB Noncommercial License 1.0** in
+[LICENSE](LICENSE). You may study, use, modify, and share covered material for
+its permitted noncommercial purposes, with attribution and license notices.
+Private forks are allowed. Research results may be published, including through
+commercial academic publishers, without relicensing independent results.
+
+Commercial products, SaaS/hosting, paid customer work, and internal commercial
+operations need a separate agreement with **Christian Klose / @ChrisDelClea**.
+The current price is **EUR 20,000**; scope, term, taxes, and payment conditions
+are specified in that agreement. Payment alone grants no commercial rights.
+See [COMMERCIAL-LICENSING.md](COMMERCIAL-LICENSING.md).
+
+Contributions are welcome under [CONTRIBUTING.md](CONTRIBUTING.md). Contributors
+keep ownership and explicitly permit community and commercial distribution under
+[Contributor Agreement 1.0](CONTRIBUTOR-AGREEMENT.md); no revenue share is promised.
+Dependencies retain their own licenses. These are project-specific legal texts,
+not unmodified PolyForm terms or a claim of lawyer-reviewed enforceability.
+
+Because commercial use is restricted, NaOnDB is **source-available**, not
+[OSI open source](https://opensource.org/osd). The activity determines whether
+use is permitted; institutional status alone is not a commercial exemption.
+
 ## Project status
 
-No project license has been selected. Crate publication is disabled (`publish = false`).
+Crate publication remains disabled (`publish = false`). Adding a license does
+not publish a package or change the database's pre-alpha implementation status.
 The helper scripts in `scripts/` are optional maintainer tools; they are not needed to use the crate.

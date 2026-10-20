@@ -44,3 +44,13 @@ never send repository data to external LLMs or require paid credentials in CI.
 Report exact commands, observed results and remaining gaps in a PR. Do not close issues merely
 because a skeleton, dependency or document exists. Do not change licensing, visibility or
 repository policies without an explicit operator decision.
+
+## Licensing decision
+
+The owner has authorized free noncommercial use and participation, with separate paid
+commercial licensing at the current EUR 20,000 price. Read `LICENSE`,
+`COMMERCIAL-LICENSING.md`, and `CONTRIBUTING.md`. Preserve the source-available designation;
+do not replace the project license with MIT/Apache/CC or mislabel it as standard PolyForm.
+External contributions require explicit rights-holder acceptance of the versioned contributor
+agreement before merge. Never accept on behalf of another author or infer retroactive rights.
+The acceptance process is manual; these documents do not configure automated enforcement.

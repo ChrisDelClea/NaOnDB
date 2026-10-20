@@ -4,6 +4,7 @@ version = "0.1.0"
 edition = "2024"
 description = "Ontology-native, multitemporal, embedded graph database on redb"
 repository = "https://github.com/ChrisDelClea/NaOnDB"
+license-file = "LICENSE"
 keywords = ["rdf", "ontology", "graph", "redb", "temporal"]
 categories = ["database-implementations"]
 publish = false

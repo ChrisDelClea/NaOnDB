@@ -1,0 +1,136 @@
+NaOnDB Noncommercial License 1.0
+License identifier: LicenseRef-NaOnDB-Noncommercial-1.0
+
+Copyright (c) 2026 Christian Klose and the respective contributors.
+Project: https://github.com/ChrisDelClea/NaOnDB
+
+This is a project-specific source-available license. It is not the PolyForm
+Noncommercial License, a Creative Commons license, or an OSI-approved license.
+
+1. Scope and acceptance
+
+"Software" means the NaOnDB source code, compiled forms, examples, documentation,
+and ontology files made available with this License, including their covered
+modifications. Separately identified third-party materials are excluded and
+remain subject to their own licenses.
+
+Each copyright or patent holder offering covered material under this License is
+a "Licensor" only for rights that holder owns or is authorized to license.
+"You" means the person or organization exercising the rights granted here.
+You accept these conditions when exercising rights granted by this License.
+No ownership of your work, data, or independent software is transferred.
+
+2. Free noncommercial permission
+
+Subject to this License, each Licensor grants you worldwide, nonexclusive,
+royalty-free permission to run, study, copy, modify, create derivative works of,
+display, and redistribute the Software in source or compiled form, solely for
+Permitted Purposes defined below. You may fork the project and keep private
+modifications. You do not have to contribute changes upstream to use it.
+
+Each Licensor also grants, for those same Permitted Purposes, a patent license
+covering only patent claims that Licensor can license and that are necessarily
+infringed by its covered material, alone or as contributed to NaOnDB. No rights
+to unrelated patents are granted.
+
+3. Permitted Purposes and commercial boundary
+
+A noncommercial purpose is an activity not primarily directed toward commercial
+advantage or monetary compensation. Permitted Purposes include personal study,
+private noncommercial use, hobby projects, noncommercial applications, teaching,
+learning, and noncommercial scientific research and reproducible experiments.
+These permissions are available to individuals and organizations alike.
+
+An organization's legal form does not by itself make an activity permitted.
+In particular, being a university, nonprofit, charity, or public institution
+is not a blanket exemption for commercial exploitation of the Software.
+Research salaries, educational tuition, grants, and sponsorship do not, by
+themselves, make teaching or research commercial. Research primarily intended
+to develop a proprietary commercial product, provide commercial client services,
+or support commercial operations is not covered by the free permission.
+
+Commercial Use includes selling or licensing a product incorporating the
+Software; using it to provide paid, subscription, or advertising-funded services;
+offering hosted databases or APIs for commercial benefit; using it in paid client
+work; and internal business use supporting commercial operations. Developing
+or operating such products or services is Commercial Use even before revenue
+is received or when the Software itself is not separately charged for.
+A startup, free tier, or nonprofit operator receives no automatic exemption.
+
+As an express exception, developing, testing, reviewing, documenting, and
+submitting improvements for inclusion in the public NaOnDB project is permitted,
+including employer-sponsored participation. This exception does not authorize
+separate commercial deployment, distribution, or client work with the Software.
+Submission terms for contributions accepted upstream are separate from this
+License; ordinary use and private forks do not require a contributor agreement.
+
+4. Research publications and outputs
+
+You may publish and discuss findings, benchmark results, diagrams, and other
+independently created outputs of permitted research or teaching, including in
+journals or books sold by commercial publishers. Publishing those results does
+not itself require a commercial NaOnDB license. Copies of Software code or
+other covered material included in a publication remain subject to this License.
+
+This License does not attach to your data, query results, independent ontologies,
+or independent applications merely because the Software processed them or
+interoperates with them. Running the Software for Commercial Use still requires
+separate permission; output ownership does not waive that requirement.
+This License does not claim exclusive rights over general ideas or independent
+implementations that do not use protected NaOnDB material or other licensed rights.
+
+5. Redistribution and attribution
+
+When distributing covered material, include this License and preserve its
+copyright, attribution, and third-party notices. Clearly identify substantial
+modifications and do not present a modified version as an official release.
+Do not remove the noncommercial restriction from covered NaOnDB material or
+represent that you can grant commercial rights you do not hold.
+Recipients receive the original Licensors' permissions under this License;
+you may license your own original additions separately, but may not thereby
+authorize Commercial Use of the covered NaOnDB material.
+
+This License grants no right to claim endorsement or to use project names or
+logos as your own brand. Accurate references to NaOnDB remain permitted.
+
+6. Separate commercial permission
+
+Commercial Use is not licensed by this document. Before starting it, obtain a
+separate written commercial agreement from Christian Klose (GitHub: ChrisDelClea)
+and pay the license fee required by that agreement. Christian Klose may grant
+only rights he owns or has been authorized to sublicense. Separate third-party
+license obligations remain applicable.
+
+The current commercial licensing policy and EUR 20,000 price are documented in
+COMMERCIAL-LICENSING.md. That policy is an invitation to negotiate a defined
+license, not an automatic offer of unlimited rights. Payment, a donation,
+submitting a contribution, or opening an issue alone does not grant a commercial
+license. The agreement must state the licensed scope and when its rights begin.
+
+7. Duration, violations, and existing rights
+
+Permissions for a version remain available under this License for the duration
+of the licensed rights while you comply. Later project licenses or price changes
+do not retroactively revoke compliant permissions or amend a signed agreement.
+
+If you violate a condition, stop the noncompliant activity immediately; your
+permissions under this License are suspended. For a first violation they are
+reinstated when you fully correct the violation within 30 days after written
+notice from the affected Licensor. Otherwise reinstatement requires that
+Licensor's written permission. Reinstatement does not erase claims concerning
+past unauthorized use. The commercial price is not an automatic contractual
+penalty, damages award, or retroactive permission for a violation.
+
+8. Warranty, liability, and mandatory rights
+
+No support, maintenance, fitness for a particular use, or other warranty is
+promised. The Software is provided as available, with its defects. To the extent
+applicable law permits, Licensors disclaim warranties and liability for losses
+arising from the Software or this License.
+
+Nothing here excludes or limits liability where that would be unlawful,
+including applicable liability for intentional misconduct, gross negligence,
+injury to life, body, or health, or mandatory product liability. Mandatory
+consumer rights, statutory copyright exceptions, and other rights that cannot
+lawfully be restricted remain unaffected. Permissions granted here do not
+replace any other permissions the law independently gives you.
